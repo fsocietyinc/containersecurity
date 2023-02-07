@@ -109,48 +109,48 @@ key
 
 1. To list all Docker images and their IDs in a table format, use the following command:
 
-```bash
-docker images --format "table {{.ID}}\t{{.Repository}}"
-```
+    ```bash
+    docker images --format "table {{.ID}}\t{{.Repository}}"
+    ```
 
-output
+    output
 
-```bash
-MAGE ID REPOSITORY
-4f4b6b93e0a4 alpine
-```
+    ```bash
+    MAGE ID REPOSITORY
+    4f4b6b93e0a4 alpine
+    ```
 
 2. To list all Docker images and their sizes in a custom format, use the following command:
 
-```bash
-docker images --format "{{.Size}}\t{{.Repository}}"
-```
+    ```bash
+    docker images --format "{{.Size}}\t{{.Repository}}"
+    ```
 
-output
+    output
 
-```text
-SIZE REPOSITORY
-3.99 MB alpine
-```
+    ```text
+    SIZE REPOSITORY
+    3.99 MB alpine
+    ```
 
-To list all Docker images and their created dates in a custom format, use the following command:
+3. To list all Docker images and their created dates in a custom format, use the following command:
 
-```bash
-docker images --format "{{.CreatedAt}}\t{{.Repository}}"
-```
+    ```bash
+    docker images --format "{{.CreatedAt}}\t{{.Repository}}"
+    ```
 
-output
+    output
 
-```text
-CREATED AT REPOSITORY
-2022-03-01T00:00:00Z alpine
-```
+    ```text
+    CREATED AT REPOSITORY
+    2022-03-01T00:00:00Z alpine
+    ```
 
 To list all Docker images with their full repository and tag names, use the `--no-trunc` flag:
 
-```bash
-docker images --all --no-trunc
-```
+  ```bash
+  docker images --all --no-trunc
+  ```
 
 `docker images --quiet` - This command lists all of the Docker images on the system, but only displays the image IDs.
 
@@ -158,7 +158,7 @@ docker images --all --no-trunc
 docker images --quiet
 ```
 
-output
+Output
 
 ```text
 cdd72a7d23c8
@@ -170,7 +170,7 @@ cdd72a7d23c8
 docker pull --quiet alpine
 ```
 
-output
+Output
 
 ```text
 d9e555c53f53
@@ -182,7 +182,7 @@ d9e555c53f53
 docker build --quiet -t my-image .
 ```
 
-output
+Output
 
 ```text
 24c1f2a1c63d
@@ -190,10 +190,9 @@ output
 
 ### Understand Image Layers
 
-why layers ?
+Why layers ?
 
-to save on computational efforts when building images , and bandwidth (aka pulling and pushing  )
-them
+to save on computational efforts when building images , and bandwidth (aka pulling and pushing) them.
 
 Build Container images
 
@@ -219,7 +218,7 @@ Each time a command is executed from the Dockerfile, a new image layer is create
 typically , an image can constitute the following
 
 - Base Image
-  - all of the container iamges are created from the base image. this ia an emoty first layer that allows users to build their images form scratch
+  - all of the container images are created from the base image. this is an empty first layer that allows users to build their images form scratch.
 
   - if you do not want to create your base image from scratch, you can use an official Docker image like Centos as your base image or customize one of the official Docker images to your requirements.
 
@@ -244,25 +243,25 @@ To build a Docker container image using a Dockerfile, follow these steps:
 2. Inside the directory, create a file named `Dockerfile` (without any file extension).
 3. Inside the Dockerfile, specify the base image you want to build from using the "FROM" directive. For example:
 
-```dockerfile
-FROM alpine
-```
+    ```dockerfile
+    FROM alpine
+    ```
 
 4. Add any additional instructions to the Dockerfile, such as installing packages, copying files, or setting environment variables.
 5. Save the Dockerfile.
 6. In your terminal, navigate to the directory containing the Dockerfile.
 7. Run the `docker build` command, followed by the desired name and tag for the image, and the path to the Dockerfile:
 
-```bash
-docker build -t my-image:latest .
-```
+    ```bash
+    docker build -t my-image:latest .
+    ```
 
-The Docker engine will now build the image based on the instructions in the Dockerfile.
+8. The Docker engine will now build the image based on the instructions in the Dockerfile.
 Once the build is complete, you can verify that the image was created by running the "docker images" command:
 
-```bash
-docker images
-```
+    ```bash
+    docker images
+    ```
 
 ### Dockerfile instructions with example
 
@@ -295,14 +294,15 @@ docker images
 
 ## Lab 1
 
-1. Begin by creating a new file called "Dockerfile" in your project directory.
-2. In the Dockerfile, we will first specify the base image that we will be using. For this example, we will be using the latest version of Ubuntu as our base image.
+Begin by creating a new file called "Dockerfile" in your project directory.
+
+In the Dockerfile, we will first specify the base image that we will be using. For this example, we will be using the latest version of Ubuntu as our base image.
 
 ```dockerfile
 FROM ubuntu:latest
 ```
 
-3. Next, we will run the necessary commands to install Git on the base image.
+Next, we will run the necessary commands to install Git on the base image.
 
 ```dockerfile
 RUN apt-get update
@@ -316,6 +316,7 @@ CMD ["git", "--version"]
 ```
 
 Save the Dockerfile and close it.
+
 To build the Docker image, we will use the "docker build" command and specify the path to the Dockerfile as an argument.
 
 ```bash
@@ -326,7 +327,24 @@ This will start a new container based on the "my_git_image" image and run the de
 
 ## Lab 2
 
-n the Dockerfile, specify the base image you want to use. For example:
+`Dockerfile` in your favorite text editor and add the following content to it:
+
+```dockerfile
+FROM ubuntu:18.04
+
+CMD ["echo", "Hello, World!"]
+```
+
+This `Dockerfile` specifies that we want to use the `ubuntu:18.04` base image and run the echo command with the arguments`"Hello, World!"` when the container is started.
+
+```bash
+docker build -t myimage .
+docker run myimage
+```
+
+## Lab 3
+
+In the Dockerfile, specify the base image you want to use. For example:
 
 ```dockerfile
 FROM ubuntu:20.04
@@ -355,24 +373,7 @@ Run the image using the following command:
 docker run -d my_image_name
 ```
 
-## Lab 2
-
-`Dockerfile`in your favorite text editor and add the following content to it:
-
-```dockerfile
-FROM ubuntu:18.04
-
-CMD ["echo", "Hello, World!"]
-```
-
-This `Dockerfile` specifies that we want to use the `ubuntu:18.04` base image and run the echo command with the arguments`"Hello, World!"` when the container is started.
-
-```bash
-docker build -t myimage .
-docker run myimage
-```
-
-## Lab 3
+## Lab 4
 
 In the Dockerfile, specify the base image that your image will be built on. For this example, we will use the alpine base image, which is a lightweight version of Linux:
 
@@ -386,7 +387,7 @@ Next, add the COPY instruction to copy a file or directory from your local machi
 COPY hello.txt /
 ```
 
-ou can also specify a different destination for the file. For example, if you want to copy hello.txt into the /app directory inside the image, you would use the following instruction:
+You can also specify a different destination for the file. For example, if you want to copy hello.txt into the /app directory inside the image, you would use the following instruction:
 
 ```dockerfile
 COPY hello.txt /app/
@@ -410,11 +411,11 @@ You should see your new image listed in the output. To run the image, use the do
 docker run my-image
 ```
 
-## Lab 4
+## Lab 5
 
- here is an example of creating a Python app with an Entrypoint instruction:
+Here is an example of creating a Python app with an Entrypoint instruction:
 
-1. First, create a new directory for your app and navigate to it in the command line.
+First, create a new directory for your app and navigate to it in the command line.
 Create a file called `app.py` and add the following code:
 
 ```python
@@ -447,7 +448,7 @@ Run the Docker image by using the following command:
 docker run my-app
 ```
 
-## Lab 5
+## Lab 6
 
 ```dockerfile
 FROM nginx:alpine
@@ -489,45 +490,47 @@ To verify that everything is working, open your web browser and navigate to `htt
 
 That's it! You have successfully created a Docker container using the `WORKDIR` instruction to set the working directory for the nginx daemon.
 
-## Lab 6
+## Lab 7
 
-1. Pull the Nginx image from Docker Hub:
+Pull the Nginx image from Docker Hub:
 
 ```bash
 docker pull nginx
 ```
 
-2. Create a directory on your local machine that you want to use as the volume for Nginx:
+Create a directory on your local machine that you want to use as the volume for Nginx:
 
 ```bash
 mkdir /path/to/volume
 ```
 
-3. Run the Nginx container and mount the volume using the -v flag:
+Run the Nginx container and mount the volume using the -v flag:
 
 ```bash
 docker run -d -p 80:80 -v /path/to/volume:/usr/share/nginx/html:ro nginx
 ```
 
-4. Test that the volume is working by creating a file in the volume directory on your local machine:
+Test that the volume is working by creating a file in the volume directory on your local machine:
 `echo "Hello, World!" > /path/to/volume/index.html`
 
-5. Visit <http://localhost> in your web browser to see the contents of the volume displayed in the Nginx container.
+Visit <http://localhost> in your web browser to see the contents of the volume displayed in the Nginx container.
 
 Note: The -d flag runs the container in detached mode, the -p flag maps port 80 on the host to port 80 in the container, and the :ro flag makes the volume read-only inside the container.
 
-# Storing data in a container
+## Storing data in a container
 
-    - Storing data in a container(mounts, volumes, etc.)<br>
-    - Networking in containers<br>
+- Storing data in a container(mounts, volumes, etc.)
+- Networking in containers
 
-# Storing data in a docker container  
+## Storing data in a docker container  
 
 There are several options for storing data in a docker container:
 
-1. Use a volume: Docker volumes allow you to persist data outside of the container, so it can be shared between multiple containers or saved even if the container is stopped or removed. You can create a volume using the "docker volume create" command and then mount it to a specific directory in your container using the "-v" flag in the "docker run" command.
+### Use a volume
 
-1. Create a volume using the docker volume create command:
+Docker volumes allow you to persist data outside of the container, so it can be shared between multiple containers or saved even if the container is stopped or removed. You can create a volume using the "docker volume create" command and then mount it to a specific directory in your container using the "-v" flag in the "docker run" command.
+
+Create a volume using the docker volume create command:
 
 ```bash
 docker volume create data-volume
@@ -585,7 +588,9 @@ test.txt
 
 This demonstrates how you can use a volume to store data in a docker container. The data will persist even if the container is stopped or deleted, as it is stored in the volume, which is managed by Docker.
 
-2. Use a bind mount: A bind mount is a file or directory on the host machine that is mounted into a container. This allows you to access data on the host machine from within the container. You can create a bind mount using the "-v" flag in the "docker run" command, specifying the path to the file or directory on the host as well as the desired mount point in the container.
+## Use a bind mount
+
+A bind mount is a file or directory on the host machine that is mounted into a container. This allows you to access data on the host machine from within the container. You can create a bind mount using the "-v" flag in the "docker run" command, specifying the path to the file or directory on the host as well as the desired mount point in the container.
 
 Create a directory on the host machine that you want to use as the bind mount. For example:
 
@@ -617,7 +622,9 @@ ls /var/www/html
 
 You should see the test.txt file listed in the output.
 
-3. Use a data container: A data container is a container specifically designed to store data that can be shared between multiple containers. You can create a data container using the "docker create" command, and then mount the data container's volume to a specific directory in other containers using the "-v" flag in the "docker run" command.
+### Use a data container
+
+A data container is a container specifically designed to store data that can be shared between multiple containers. You can create a data container using the "docker create" command, and then mount the data container's volume to a specific directory in other containers using the "-v" flag in the "docker run" command.
 
 Create a new data container using the docker create command. For example:
 
@@ -659,7 +666,9 @@ docker rm data-container
 
 This will delete the data container, but the data will still be available in the app-container.
 
-4. Use a host path: You can also store data directly on the host machine and access it from within the container using the "-v" flag in the "docker run" command, specifying the path on the host machine as the mount point in the container. However, this option is not recommended as it can lead to issues with container portability and separation of concerns.
+### Use a host path
+
+You can also store data directly on the host machine and access it from within the container using the "-v" flag in the "docker run" command, specifying the path on the host machine as the mount point in the container. However, this option is not recommended as it can lead to issues with container portability and separation of concerns.
 
 To use a host path to store data in Docker, you will need to use the "-v" flag in the "docker run" command to specify the host path and the container path for the data volume. Here is an example using a MongoDB container:
 
@@ -690,22 +699,23 @@ Note: Make sure that the host path that you specify in the "-v" flag exists and 
 There are two types of networking in Docker:
 
 - Bridge networking: This is the default networking mode in Docker. It creates a virtual network between containers on the same host. Each container is given its own IP address within this network, and containers can communicate with each other using this network.
-  1. First, create a Dockerfile that will build our container:
 
-      ```dockerfile
-      FROM alpine
+First, create a Dockerfile that will build our container:
 
-      CMD ["echo", "Hello World!"]
-      ```
+```dockerfile
+FROM alpine
 
-  2. Build the image using the following command:
+CMD ["echo", "Hello World!"]
+```
 
-      ```bash
-      docker build -t hello-world .
-      docker run -it hello-world
-      ```
+Build the image using the following command:
 
-  Inspect the container's networking configuration using the following command:
+```bash
+docker build -t hello-world .
+docker run -it hello-world
+```
+
+Inspect the container's networking configuration using the following command:
 
 ```json
 "NetworkSettings": {
